@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from './components/Navigation'
 import Field from './components/Field'
 import Button from './components/Button'
 import ManipulationPanel from './components/ManipulationPanel'
 import { initFields } from './utils'
 
-const fields = initFields(35)
+const initialValues = initFields(35)
 
 function App() {
+  const [fields, setFields] = useState(initialValues)
+
   return (
     <div className="App">
       <header className="header">
