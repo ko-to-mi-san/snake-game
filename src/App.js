@@ -3,7 +3,9 @@ import Navigation from './components/Navigation'
 import Field from './components/Field'
 import Button from './components/Button'
 import ManipulationPanel from './components/ManipulationPanel'
-import './App.css';
+import { initFields } from './utils'
+
+const fields = initFields(35)
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
         <Navigation />
       </header>
       <main className="main">
-        <Field />
+        <Field fields={fields} />
       </main>
       <footer className="footer">
         <Button />
