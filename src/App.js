@@ -7,14 +7,36 @@ import { initFields } from './utils'
 
 const initialPosition = {x: 17, y: 17}
 const initialValues = initFields(35, initialPosition)
+  const defaultInterval = 100
+
+  let timer = undefined
+
+  const unsubscribe = () => {
+    if (!timer) {
+      return
+    }
+    clearInterval(timer)
+  }
 
 function App() {
   const [fields, setFields] = useState(initialValues)
   const [position, setPosition] = useState()
+  const [tick, setTick] = useState(0)
 
   useEffect(() => {
     setPosition(initialPosition)
+    timer = setInterval(() => {
+      setTick(tick => tick + 1)
+    }, defaultInterval)
+    return unsubscribe
   }, [])
+
+  useEffect(() => {
+    if (!position) {
+      return
+    }
+    goUp()
+  },[tick])
 
   const goUp = () => {
     const { x,y } = position
@@ -36,9 +58,6 @@ function App() {
       <main className="main">
         <Field fields={fields} />
       </main>
-      <div style={{ padding: '16px' }}>
-        <button onClick={goUp}>進む</button>
-      </div>
       <footer className="footer">
         <Button />
         <ManipulationPanel />
