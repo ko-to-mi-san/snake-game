@@ -76,10 +76,7 @@ function App() {
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
-    // setBody([initialPosition])
-    setBody(
-      new Array(15).fill('').map((_item, index) => ({ x: 17, y: 17 + index })),
-    )
+    setBody([initialPosition])
     timer = setInterval(() => {
       setTick(tick => tick + 1)
     }, defaultInterval)
@@ -97,6 +94,8 @@ function App() {
   },[tick])
 
   const onStart = () => setStatus(GameStatus.playing)
+
+  const onStop = () => setStatus(GameStatus.suspended)
 
   const onRestart = () => {
     timer = setInterval(() => {
@@ -170,7 +169,12 @@ function App() {
         <Field fields={fields} />
       </main>
       <footer className="footer">
-        <Button status={status} onStart={onStart} onRestart={onRestart}/>
+        <Button
+          status={status}
+          onStop ={onStop}
+          onStart={onStart}
+          onRestart={onRestart}
+        />
         <ManipulationPanel onChange={onChangeDirection} />
       </footer>
     </div>
