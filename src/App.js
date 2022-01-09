@@ -64,6 +64,10 @@ const initialValues = initFields(35, initialPosition)
     return false;
   }
 
+  const isEatingMyself = (fields, position) => {
+    return fields[position.y][position.x] === 'snake'
+  }
+
 function App() {
   const [fields, setFields] = useState(initialValues)
   const [body, setBody] = useState([])
@@ -72,7 +76,10 @@ function App() {
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
-    setBody([initialPosition])
+    // setBody([initialPosition])
+    setBody(
+      new Array(15).fill('').map((_item, index) => ({ x: 17, y: 17 + index })),
+    )
     timer = setInterval(() => {
       setTick(tick => tick + 1)
     }, defaultInterval)
@@ -131,7 +138,7 @@ function App() {
       x: x + delta.x,
       y: y + delta.y
     }
-     if (isCollision(fields.length, newPosition)) {
+     if (isCollision(fields.length, newPosition) || isEatingMyself(fields, newPosition)) {
        unsubscribe()
        return false
      }
